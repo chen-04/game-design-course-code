@@ -10,7 +10,7 @@ Created on Wed Jun 26 14:47:57 2019
 import time, webbrowser
 import _src.looper as looper
 import _src.scale as scale
-import _src.fusebypass as fuseBypass
+import _src.fusebypass as fusebypass
 
 loops = looper.Loops()
 numberPatch = scale.Scales()
