@@ -6,19 +6,11 @@ Created on Wed Jun 26 14:47:57 2019
 """
 
 # Scavenger Hunt
-<<<<<<< HEAD
-
-import time, webbrowser
-import _src.looper as looper
-import _src.scale as scale
-import _src.fusebypass as fusebypass
-=======
 import time
 import _src.looper as looper
 import _src.scale as scale
 import _src.fusebypass as fusebypass
 import webbrowser
->>>>>>> fbdff9808b65e839ca1ae3ac1fddfbf1a368b727
 
 loops = looper.Loops()
 numberPatch = scale.Scales()
