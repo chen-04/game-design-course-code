@@ -10,6 +10,7 @@ from ship import Ship
 from laser import Laser
 from asteroid import Asteroid
 from background import Background
+from enemy import Enemy
 
 #Set up window and frame rate variables
 FPS = 40
@@ -68,7 +69,18 @@ def runGame():
     minAsteroidSpeed = 1 #Pixels per frame. We'll change these with the code later
     maxAsteroidSpeed = 6 #Pixels per frame. We'll change these with the code later
     asteroidIndex = 0
-    
+
+    #enemyStuff
+    enemies = initializeObjects(15)
+    EspawnRate = 1
+    minEnemySpeed = 1
+    maxEnemySpeed = 6
+    EnemyIndex = 0
+    enemyLasers = initializeObjects(10)
+    fireRate = random.randint(2,4)
+    enemyLaserIndex = 0
+    enemyLaserSpeed = 5
+
     #Background stuff
     backgroundObject = Background("background", WINDOWHEIGHT)
     paralaxObject = Background("paralax", WINDOWHEIGHT)
@@ -114,8 +126,10 @@ def runGame():
             level = level + 1
             minAsteroidSpeed += 2
             maxAsteroidSpeed += 2
+            minEnemySpeed+=1
+            maxEnemySpeed+=2
             spawnRate += 1
-            score = score + 1
+            score = 1
         
         #Laser Firing
         if firing:
@@ -131,6 +145,20 @@ def runGame():
             asteroidIndex += 1
             if asteroidIndex >= len(asteroids):
                 asteroidIndex = 0
+
+        
+        if np.random.randint(0, FPS/spawnRate) == 0:
+            enemies[enemyIndex] = Enemy(WINDOWWIDTH, WINDOWHEIGHT, np.random.randint(minEnemySpeed, maxEnemySpeed))
+            enemyIndex += 1
+            if enemyIndex >= len(enemies):
+                enemyIndex = 0
+        if True:
+            enemies[enemyIndex] = EnemyLaser(enemies.rect,enemies.speed)
+            enemyIndex += 1
+            if enemyIndex >= len(enemies):
+                enemyIndex = 0
+    
+        
                 
         #Move Stuff
         for laser in lasers:
@@ -139,6 +167,12 @@ def runGame():
         for asteroid in asteroids:
             if asteroid != None:
                 asteroid.move()
+        for enemy in enemies:
+            if enemy != None:
+                enemy.move(WINDOWHEIGHT)
+
+
+
         playerShip.move(leftHeld, rightHeld, upHeld, downHeld)
         backgroundObject.move()
         paralaxObject.move()
@@ -166,6 +200,9 @@ def runGame():
                     else:
                         return #Game over. Leave the runGame() function
                     break #exit the loop after detecting a player collision
+        
+            
+
         
 
         
@@ -222,6 +259,14 @@ def initializeObjects(number):
     for x in range(number):
         objects.append(None)
     return objects
+
+def drawEnemies(enemies):
+    for enemy in enemies:
+        if enemy!=None:
+            draw(enemy.image, enemyLaser.rect)
+            draw(enemyLasers.image,)
+
+    
 
 def drawAsteroids(asteroids):
     for asteroid in asteroids:
